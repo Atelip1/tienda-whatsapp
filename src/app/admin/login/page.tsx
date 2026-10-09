@@ -14,6 +14,12 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
         </div>
         <FormularioLogin aviso={expirada ? "Tu sesión se cerró tras 60 minutos sin actividad. Inicia sesión otra vez." : undefined} />
       </div>
+      <div className="login-fotos" aria-hidden>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="lf-principal" src="/login-bebe.jpg" alt="" width={612} height={408} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="lf-secundaria" src="/portada-bebe.jpg" alt="" width={940} height={788} />
+      </div>
     </div>
   );
 }
