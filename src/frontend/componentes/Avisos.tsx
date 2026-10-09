@@ -4,15 +4,26 @@ import { createContext, useCallback, useContext, useState } from "react";
 type Aviso = { id: number; texto: React.ReactNode; error?: boolean };
 const Ctx = createContext<(texto: React.ReactNode, error?: boolean) => void>(() => {});
 
-/** `soloErrores`: no muestra mensajes de confirmación, solo los de error. */
-export function AvisosProvider({ children, soloErrores = false }: { children: React.ReactNode; soloErrores?: boolean }) {
+/**
+ * `soloErrores`: no muestra mensajes de confirmación, solo los de error.
+ * `silencioso`: no muestra ningún mensaje flotante (se usa en la tienda).
+ */
+export function AvisosProvider({
+  children,
+  soloErrores = false,
+  silencioso = false,
+}: {
+  children: React.ReactNode;
+  soloErrores?: boolean;
+  silencioso?: boolean;
+}) {
   const [lista, setLista] = useState<Aviso[]>([]);
   const avisar = useCallback((texto: React.ReactNode, error = false) => {
-    if (soloErrores && !error) return;
+    if (silencioso || (soloErrores && !error)) return;
     const id = Date.now() + Math.random();
     setLista((l) => [...l, { id, texto, error }]);
     setTimeout(() => setLista((l) => l.filter((a) => a.id !== id)), error ? 4500 : 3500);
-  }, [soloErrores]);
+  }, [soloErrores, silencioso]);
   return (
     <Ctx.Provider value={avisar}>
       {children}

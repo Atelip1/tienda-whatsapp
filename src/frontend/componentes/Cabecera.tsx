@@ -16,7 +16,9 @@ export function Cabecera({ logo }: { logo: React.ReactNode }) {
           <Link href="/carrito" prefetch className="cart-btn" aria-label={`Carrito: ${cantidadTotal} productos`}>
             <IconoCarrito />
             <span className="hide-sm">Carrito</span>
-            <span className="cart-count">{cantidadTotal}</span>
+            <span className="cart-count" key={cantidadTotal}>
+              {cantidadTotal}
+            </span>
           </Link>
         </div>
       </header>

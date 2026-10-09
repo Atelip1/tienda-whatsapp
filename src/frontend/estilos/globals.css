@@ -586,3 +586,10 @@ tbody tr:hover{background:#FFFAFB}
 .stat:hover{box-shadow:0 2px 4px rgba(63,39,48,.06),0 16px 32px rgba(63,39,48,.10)}
 .stat:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 @media(min-width:601px){.stat .sver{grid-column:2}}
+
+/* Confirmación en el botón y salto del contador del carrito */
+.btn-outline.hecho{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-strong)}
+.cart-count{animation:salto .35s ease-out}
+@keyframes salto{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.cart-count{animation:none}}
+.note a{color:var(--brand-strong);font-weight:700}

@@ -13,7 +13,7 @@ export default async function TiendaLayout({ children }: { children: React.React
   const [whatsapp, promos] = await Promise.all([numeroWhatsApp(), promocionesActivas()]);
   return (
     <CarritoProvider whatsapp={whatsapp}>
-      <AvisosProvider>
+      <AvisosProvider silencioso>
         <Cabecera logo={<Logo />} />
         <main className="wrap shop-main">{children}</main>
         <Pie />

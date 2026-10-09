@@ -7,7 +7,7 @@ import { supabaseConfigurado } from "@/compartido/supabase";
 import type { Producto } from "@/compartido/tipos";
 import { useAvisos } from "./Avisos";
 import { useCarrito } from "./Carrito";
-import { IconoCarrito, IconoChat } from "./Iconos";
+import { IconoCarrito, IconoChat, IconoCheck } from "./Iconos";
 import { Precio } from "./TarjetaProducto";
 
 export function Comprar({ p: inicial, children }: { p: Producto; children?: React.ReactNode }) {
@@ -61,20 +61,14 @@ export function Comprar({ p: inicial, children }: { p: Producto; children?: Reac
   };
 
   // RF-08: suma sin duplicar la línea y confirma
+  // La confirmación se ve en el mismo botón (sin mensajes flotantes).
+  const [agregado, setAgregado] = useState<"" | "ok" | "max">("");
   const alCarrito = () => {
-    const enCarrito = lineas.find((l) => l.id === p.id)?.qty ?? 0;
     const n = agregar(p.id, qty, p.stock);
-    if (n === 0) {
-      avisar(`Ya tienes en tu carrito las ${enCarrito} unidades disponibles.`, true);
-      return;
-    }
-    avisar(
-      <>
-        {n < qty ? `Solo hay ${p.stock} unidades. Se agregaron ${n}. ` : `Agregado al carrito: ${p.name} (${n}). `}
-        <Link href="/carrito">Ver carrito</Link>
-      </>,
-    );
+    setAgregado(n === 0 ? "max" : "ok");
+    setTimeout(() => setAgregado(""), 1800);
   };
+  const enCarrito = lineas.find((l) => l.id === p.id)?.qty ?? 0;
 
   return (
     <>
@@ -123,15 +117,27 @@ export function Comprar({ p: inicial, children }: { p: Producto; children?: Reac
           <IconoChat />
           Comprar ahora
         </button>
-        <button type="button" className="btn btn-outline" onClick={alCarrito} disabled={!disponible}>
-          <IconoCarrito />
-          Agregar al carrito
+        <button
+          type="button"
+          className={"btn btn-outline" + (agregado ? " hecho" : "")}
+          onClick={alCarrito}
+          disabled={!disponible}
+          aria-live="polite"
+        >
+          {agregado === "ok" ? <IconoCheck /> : <IconoCarrito />}
+          {agregado === "ok" ? "Agregado al carrito" : agregado === "max" ? "Ya tienes todo el stock" : "Agregar al carrito"}
         </button>
       </div>
       <p className="note">
         {disponible
           ? "El pago y la entrega se coordinan con la tienda por WhatsApp."
           : "Este producto está agotado. Escríbenos para saber cuándo vuelve o revisa otros productos."}
+        {disponible && enCarrito > 0 ? (
+          <>
+            {" "}
+            Tienes {enCarrito} en tu <Link href="/carrito">carrito</Link>.
+          </>
+        ) : null}
       </p>
     </>
   );
