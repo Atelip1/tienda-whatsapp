@@ -6,6 +6,7 @@ import { BUCKET_PRODUCTOS, urlPublica } from "@/compartido/supabase";
 import { todasLasCategorias, todasLasPromociones, todosLosProductos, whatsappPanel } from "@/backend/consultas/panel";
 import {
   IconoAlerta,
+  IconoAtras,
   IconoCaja,
   IconoChat,
   IconoCheck,
@@ -75,6 +76,10 @@ export default async function Inicio() {
             <b>{n}</b>
             <span className="st">{t}</span>
             <span className="sd">{d}</span>
+            <span className="sver">
+              Ver lista
+              <IconoAtras />
+            </span>
           </Link>
         ))}
       </div>

@@ -566,3 +566,23 @@ tbody tr:hover{background:#FFFAFB}
 .side nav .mico.girando{animation:latido .7s ease-in-out infinite alternate;color:var(--brand)}
 @keyframes latido{from{opacity:1}to{opacity:.35}}
 @media (prefers-reduced-motion:reduce){.side nav .mico.girando{animation:none}}
+
+/* Galería: flechas, contador y video automático */
+.gallery .main{position:relative}
+.gvideo{width:100%;height:100%;object-fit:cover;display:block;background:var(--brand-soft)}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--brand-strong);font-size:28px;line-height:1;display:grid;place-items:center;padding-bottom:4px;cursor:pointer;box-shadow:0 4px 14px rgba(63,39,48,.18);transition:background .15s,transform .15s}
+.gnav:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+.gnav.prev{left:14px}
+.gnav.next{right:14px}
+.gcount{position:absolute;right:14px;bottom:14px;background:rgba(63,39,48,.7);color:#fff;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+@media (prefers-reduced-motion:reduce){.gnav,.gnav:hover{transition:none}}
+
+/* Inicio: tarjetas que se ven clicables */
+.stat{cursor:pointer;grid-template-rows:auto auto auto auto}
+.stat .sver{display:inline-flex;align-items:center;gap:4px;margin-top:10px;font-size:13px;font-weight:800;color:var(--brand)}
+.stat .sver svg{width:14px;height:14px;transform:rotate(180deg);transition:transform .15s}
+.stat:hover .sver{text-decoration:underline}
+.stat:hover .sver svg{transform:rotate(180deg) translateX(-3px)}
+.stat:hover{box-shadow:0 2px 4px rgba(63,39,48,.06),0 16px 32px rgba(63,39,48,.10)}
+.stat:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+@media(min-width:601px){.stat .sver{grid-column:2}}
